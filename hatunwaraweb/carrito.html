@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Tu Carrito - Hatun Wara</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="overlay-azul"></div>
+<video autoplay muted loop id="video-fondo">
+    <source src="tu-video-huanuco.mp4" type="video/mp4">
+</video>
+<div class="pantalla-completa-flex">
+    <div class="carrito-llamativo">
+        <header class="carrito-top">
+            <h2><i class="fas fa-shopping-cart"></i> Tu Pedido</h2>
+            <a href="index.html" class="cerrar-carrito">✕</a>
+        </header>
+
+        <div id="lista-carrito" class="scroll-productos">
+            </div>
+
+        <div class="resumen-final">
+            <div class="fila-total">
+                <span class="txt-total">Total a pagar:</span>
+                <span id="total-final" class="precio-destacado">S/ 0.00</span>
+            </div>
+            <button class="btn-confirmar-magico" onclick="enviarPedidoWhatsApp()">
+                🚀 Confirmar Pedido por WhatsApp
+            </button>
+            <p class="pago-nota">Pago en efectivo o Yape al recibir</p>
+        </div>
+    </div>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1349 @@
+/* 1. RESET GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 2. CAPA AZUL TRANSPARENTOSA Y VIDEO */
+body {
+    display: flex;
+    min-height: 100vh;
+    /* Este gradiente crea el filtro azul sobre el video */
+    background: linear-gradient(
+        rgba(26, 82, 118, 0.75), 
+        rgba(44, 62, 80, 0.8)
+    );
+    background-attachment: fixed; /* Mantiene el filtro azul aunque hagas scroll */
+}
+
+#video-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* El video queda detrás del azul del body */
+    object-fit: cover;
+}
+
+/* 3. ESTRUCTURA LADO A LADO */
+.layout-principal {
+    display: flex;
+    width: 100%;
+}
+
+/* BARRA LATERAL (Lado izquierdo) */
+.barra-lateral {
+    width: 25%;
+    min-width: 280px;
+    background: rgba(44, 62, 80, 0.5); /* Más transparente para que pase el azul */
+    backdrop-filter: blur(15px);      /* Efecto cristal */
+    color: white;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* CONTENEDOR DE PRODUCTOS (Lado derecho - Sin huecos) */
+#contenedor-productos {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 50px 20px;
+    align-content: flex-start;
+}
+
+/* 4. COMPONENTES (Botones, Tarjetas, etc.) */
+.cabecera-logo h1 { font-size: 2rem; margin-bottom: 5px; }
+.cabecera-logo p { font-size: 0.9rem; opacity: 0.8; margin-bottom: 30px; }
+
+#boton-carrito {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid white;
+    color: white;
+    padding: 12px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+#boton-carrito:hover { background: white; color: #2c3e50; }
+
+#contador-carrito {
+    background: #e74c3c;
+    padding: 2px 8px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.tarjeta-producto {
+    background: rgba(255, 255, 255, 0.9);
+    width: 280px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tarjeta-producto:hover { transform: translateY(-10px); }
+
+.tarjeta-producto img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.btn-ver-mas { background: #3498db; color: white !important; }
+.btn-comprar { background: #27ae60; color: white; border: none; }
+.btn-ver-mas, .btn-comprar {
+    display: block; width: 100%; padding: 10px; border-radius: 8px;
+    margin-top: 10px; font-weight: bold; cursor: pointer; transition: 0.3s;
+}
+
+/* 5. RESPONSIVO */
+@media (max-width: 768px) {
+    .layout-principal { flex-direction: column; }
+    .barra-lateral { width: 100%; height: auto; position: relative; }
+    #contenedor-productos { width: 100%; }
+}
+
+/* Asegura que el contenedor principal sea flexible */
+.contenedor-principal {
+    display: flex;
+    padding: 40px;
+    gap: 40px;
+    min-height: 100vh;
+    align-items: center; /* Centra el contenido verticalmente */
+}
+
+/* El bloque de la izquierda estilo imagen */
+.bloque-info {
+    width: 300px;
+    color: white;
+}
+
+.logo-box {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+/* El overlay azul total */
+.overlay-azul {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 45, 60, 0.7); /* Este es el azul de la imagen */
+    z-index: -2;
+}
+/* Contenedor principal de la página de detalles */
+.contenedor-detalle {
+    display: flex; /* Esto pone los elementos en columnas */
+    gap: 40px;     /* Espacio entre la imagen y el texto */
+    padding: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center; /* Centra verticalmente */
+}
+
+/* Lado izquierdo: El visor de fotos */
+.seccion-izquierda {
+    flex: 1.5; /* Le damos un poco más de espacio a la imagen */
+    position: relative;
+    background: #000000;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.visor-imagenes img {
+    width: 100%;
+    height: 500px; /* Imagen grande como pediste */
+    object-fit: cover;
+    display: block;
+}
+
+/* Flechas de navegación */
+.flecha {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 24px;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.flecha:hover { background: #ffffff; transform: translateY(-50%) scale(1.1); }
+#prev { left: 20px; }
+#next { right: 20px; }
+
+/* Lado derecho: Información y compra */
+.seccion-derecha {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.precio-grande {
+    font-size: 2rem;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+/* El overlay azul total */
+.overlay-azul {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(35, 138, 241, 0.7); /* Este es el azul de la imagen */
+    z-index: -2;
+}
+.contenedor-img {
+    width: 100%;
+    height: 250px; /* Esto mantiene todas las fotos al mismo nivel */
+    overflow: hidden;
+    border-radius: 15px 15px 0 0;
+}
+
+.contenedor-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Esto evita que la imagen de WhatsApp se estire feo */
+    display: block;
+}
+.mi-logo-texto {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0px #3498db; /* Un toque de color azul */
+}
+
+.mi-logo-texto span {
+    color: #27ae60; /* La palabra Wara en verde como las flores */
+    text-shadow: 2px 2px 0px #2c3e50;
+}
+/* Estilo del Botón de WhatsApp */
+.btn-whatsapp-llamativo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #25D366; /* Verde WhatsApp */
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 15px 20px;
+    border-radius: 50px;
+    margin: 20px 0;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    transition: 0.3s all;
+    animation: latido 2s infinite; /* Aquí empieza la magia */
+}
+
+/* Icono dentro del botón */
+.btn-whatsapp-llamativo img {
+    width: 25px;
+    height: 25px;
+    filter: brightness(0) invert(1); /* Hace el logo blanco */
+}
+
+/* Efecto al pasar el mouse */
+.btn-whatsapp-llamativo:hover {
+    background-color: #128C7E;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(18, 140, 126, 0.6);
+}
+
+/* ANIMACIÓN DE LATIDO (Pulso) */
+@keyframes latido {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+/* Contenedor Principal con efecto Cristal */
+.contenedor-detalle-premium {
+    display: flex;
+    max-width: 1000px;
+    margin: 60px auto;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 40px;
+    gap: 50px;
+    color: white;
+}
+
+/* Imagen con brillo */
+.marco-foto {
+    width: 100%;
+    height: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.marco-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.marco-foto:hover img {
+    transform: scale(1.1); /* Efecto zoom suave */
+}
+
+/* Textos e Info */
+.etiqueta-novedad {
+    background: #f1c40f;
+    color: #000;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.nombre-detalle { font-size: 2.5rem; margin: 10px 0; }
+.descripcion-corta { opacity: 0.9; line-height: 1.6; }
+
+.caja-precio { margin: 25px 0; }
+.precio-grande { font-size: 3rem; font-weight: 800; color: #2ecc71; }
+
+/* Botones de acción */
+.caja-acciones { display: flex; flex-direction: column; gap: 15px; }
+
+.btn-ws-detalle {
+    background: transparent;
+    border: 2px solid #25D366;
+    color: #25D366;
+    text-align: center;
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-ws-detalle:hover {
+    background: #25D366;
+    color: white;
+}
+
+.btn-volver {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    z-index: 100;
+}
+
+/* Responsivo para celulares */
+@media (max-width: 850px) {
+    .contenedor-detalle-premium {
+        flex-direction: column;
+        margin: 20px;
+        padding: 20px;
+    }
+}
+/* CONTENEDOR PRINCIPAL */
+.contenedor-carrito-pro {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 20px;
+    color: white;
+}
+
+.carrito-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.layout-carrito {
+    display: flex;
+    gap: 30px;
+}
+
+/* LISTA DE PRODUCTOS */
+.productos-comprados {
+    flex: 2;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.item-carrito {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item-carrito img {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.info-item { flex: 1; }
+.info-item h4 { font-size: 1.2rem; margin-bottom: 5px; }
+
+.btn-eliminar {
+    background: rgba(231, 76, 60, 0.2);
+    color: #ff7675;
+    border: 1px solid #e74c3c;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-eliminar:hover { background: #e74c3c; color: white; }
+
+/* RESUMEN DE PAGO */
+.resumen-pago {
+    flex: 1;
+    background: white;
+    color: #2c3e50;
+    padding: 30px;
+    border-radius: 20px;
+    height: fit-content;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.resumen-pago h2 { margin-bottom: 20px; }
+.linea-resumen {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.total {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #27ae60;
+    margin-top: 10px;
+}
+
+.btn-pagar-ws {
+    width: 100%;
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.gratis { color: #27ae60; font-weight: bold; }
+/* Centrado total en pantalla */
+.pantalla-completa-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* La Caja del Carrito */
+.carrito-llamativo {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px); /* Efecto cristal muy fuerte */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 100%;
+    max-width: 500px; /* Tamaño tipo celular/tablet */
+    border-radius: 30px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+    animation: aparecer 0.5s ease-out;
+}
+
+@keyframes aparecer {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.carrito-top {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cerrar-carrito {
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Lista de productos con scroll suave */
+.scroll-productos {
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Diseño de cada producto en el carrito */
+.item-carrito {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.item-carrito:hover { background: rgba(255, 255, 255, 0.2); }
+
+.item-carrito img {
+    width: 60px; height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* El Resumen y el Botón Final */
+.resumen-final {
+    background: white; /* Color sólido para que resalte el final */
+    padding: 30px;
+    border-radius: 30px 30px 0 0;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.precio-destacado {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #27ae60;
+    display: block;
+}
+
+.btn-confirmar-magico {
+    width: 100%;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.btn-confirmar-magico:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(37, 211, 102, 0.4);
+}
+
+.txt-pago {
+    font-size: 0.8rem;
+    margin-top: 10px;
+    opacity: 0.7;
+}
+/* 1. Centrado Total del Carrito */
+.pantalla-completa-flex {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+}
+
+/* 2. La Caja Flotante (Glassmorphism) */
+.carrito-llamativo {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px); /* Efecto de vidrio */
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    max-width: 450px; /* Tamaño ideal tipo app móvil */
+    border-radius: 40px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    overflow: hidden;
+    animation: entradaSuave 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+@keyframes entradaSuave {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* 3. Cabecera del Carrito */
+.carrito-top {
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cerrar-carrito {
+    text-decoration: none;
+    color: white;
+    font-size: 1.8rem;
+    transition: 0.3s;
+}
+
+.cerrar-carrito:hover { transform: rotate(90deg); color: #ff7675; }
+
+/* 4. Lista de Productos */
+.scroll-productos {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+/* Estilo para los productos individuales que se cargan con JS */
+.item-carrito {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    color: white;
+}
+
+.item-carrito img {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* 5. Resumen y Botón Mágico */
+.resumen-final {
+    background: white;
+    padding: 35px;
+    border-radius: 40px 40px 0 0;
+    text-align: center;
+}
+
+.fila-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.precio-destacado {
+    font-size: 2.2rem;
+    color: #27ae60;
+    font-weight: 900;
+}
+
+.btn-confirmar-magico {
+    width: 100%;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+    transition: 0.3s ease;
+}
+
+.btn-confirmar-magico:hover {
+    transform: scale(1.03);
+    box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+}
+
+.txt-pago {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    margin-top: 15px;
+}
+/* Centrado total */
+.pantalla-completa-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Oscurece un poco el fondo para resaltar */
+}
+
+/* Caja más grande */
+.carrito-llamativo {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 90%;
+    max-width: 700px; /* Aumentado para que sea bien grande */
+    border-radius: 40px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ÁREA DE PRODUCTOS (Muy importante) */
+.scroll-productos {
+    padding: 30px;
+    max-height: 450px; /* Altura para que quepan varios productos */
+    overflow-y: auto;  /* Permite scroll si hay muchos */
+    min-height: 150px; /* Evita que se colapse si hay pocos */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo de cada producto dentro del carrito */
+.item-carrito {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 20px;
+    color: white;
+}
+
+.item-carrito img {
+    width: 90px; /* Imagen más grande */
+    height: 90px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.info-item h4 {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+
+/* Resumen final */
+.resumen-final {
+    background: white;
+    padding: 40px;
+    border-radius: 40px 40px 0 0;
+    text-align: center;
+}
+
+.precio-destacado {
+    font-size: 3.5rem; /* El total ahora es enorme */
+    font-weight: 900;
+    color: #27ae60;
+}
+/* Animación del producto volando */
+.particula-voladora {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: #27ae60;
+    border-radius: 50%;
+    z-index: 9999;
+    pointer-events: none;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes flash-carrito {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.5); background: #27ae60; }
+    100% { transform: scale(1); }
+}
+
+.animar-sacudida {
+    animation: flash-carrito 0.4s ease;
+}
+/* Contenedor que permite ver los productos */
+.scroll-productos {
+    max-height: 400px; /* Altura máxima para los productos */
+    overflow-y: auto;  /* Si hay muchos, sale barrita para bajar */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Estilo de cada fila de producto para que se vea como en tu imagen */
+.item-carrito {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 15px;
+    border-radius: 20px;
+    color: white;
+    justify-content: space-between;
+}
+
+.item-carrito img {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.info-item {
+    flex-grow: 1;
+    padding: 0 15px;
+}
+
+.info-item h4 {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.btn-eliminar {
+    background: rgba(231, 76, 60, 0.2);
+    border: 1px solid #e74c3c;
+    color: #ff7675;
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+/* RESET GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #1a5276; /* El azul de tu marca */
+    color: white;
+}
+
+/* TARJETAS MODERNAS */
+.tarjeta-producto {
+    background: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+    backdrop-filter: blur(15px); /* Efecto cristal */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.tarjeta-producto:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tarjeta-producto img {
+    border-radius: 15px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* INTERFAZ DEL CARRITO (CENTRADO Y GRANDE) */
+.pantalla-completa-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.carrito-llamativo {
+    width: 90%;
+    max-width: 600px; /* Tamaño ideal para resaltar */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(25px);
+    border-radius: 40px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+/* ÁREA BLANCA DEL TOTAL */
+.resumen-final {
+    background: white;
+    padding: 35px;
+    border-radius: 40px 40px 0 0;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.precio-destacado {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #27ae60; /* Verde soles */
+}
+
+/* BOTÓN WHATSAPP ANIMADO */
+.btn-confirmar-magico {
+    width: 100%;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-confirmar-magico:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
+}
+/* CONTENEDOR PRINCIPAL DE DETALLES */
+.contenedor-detalle-premium {
+    background: rgba(255, 255, 255, 0.95); /* Fondo casi blanco para máximo contraste */
+    border-radius: 35px;
+    padding: 40px;
+    display: flex;
+    gap: 40px;
+    max-width: 900px;
+    margin: 50px auto;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    color: #2c3e50; /* Texto oscuro para que se lea perfecto */
+}
+
+/* IMAGEN DEL PRODUCTO */
+.visor-imagenes img {
+    width: 350px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 25px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* INFORMACIÓN (Lado derecho) */
+.seccion-derecha {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.etiqueta-top {
+    background: #f1c40f;
+    color: #000;
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    align-self: flex-start;
+}
+
+.titulo-producto {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1a5276;
+    margin: 0;
+}
+
+.precio-grande {
+    font-size: 3.5rem;
+    color: #27ae60; /* Verde brillante para el precio */
+    font-weight: 900;
+    margin: 10px 0;
+}
+
+/* BOTONES MEJORADOS */
+.btn-comprar {
+    background: #27ae60;
+    color: white;
+    padding: 18px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-comprar:hover {
+    background: #219150;
+    transform: scale(1.02);
+}
+
+.btn-whatsapp-secundario {
+    background: transparent;
+    border: 2px solid #25D366;
+    color: #128C7E !important;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+}
+/* CONTENEDOR TIPO CARTA PREMIUM */
+.contenedor-detalle-premium {
+    display: flex;
+    gap: 50px;
+    max-width: 1000px;
+    margin: 60px auto;
+    background: rgba(255, 255, 255, 0.95); /* Fondo blanco limpio */
+    padding: 40px;
+    border-radius: 40px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+/* GALERÍA / IMAGEN */
+.marco-foto {
+    width: 400px;
+    height: 450px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+.marco-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* TEXTOS Y PRECIOS */
+.nombre-detalle {
+    font-size: 2.8rem;
+    color: #1a5276;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.etiqueta-novedad {
+    background: #f1c40f;
+    color: #000;
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.caja-precio {
+    margin: 25px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+
+.moneda {
+    font-size: 1.8rem;
+    color: #27ae60;
+    font-weight: 700;
+}
+
+.precio-grande {
+    font-size: 4rem;
+    color: #27ae60;
+    font-weight: 900;
+}
+
+/* BOTONES DETALLE */
+.btn-comprar {
+    background: #27ae60;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s all;
+    box-shadow: 0 10px 20px rgba(39, 174, 96, 0.3);
+}
+
+.btn-comprar:hover {
+    transform: translateY(-3px);
+    background: #219150;
+}
+
+.btn-ws-detalle {
+    display: inline-block;
+    padding: 18px 30px;
+    border: 2px solid #25D366;
+    color: #128C7E !important;
+    border-radius: 15px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 15px;
+    transition: 0.3s;
+}
+
+.btn-ws-detalle:hover {
+    background: #25D366;
+    color: white !important;
+}
+
+/* BENEFICIOS */
+.beneficios {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.beneficios p {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+}
+/* CONTENEDOR DE LA GALERÍA (Debe tener posición relativa) */
+.galeria-visor {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ESTILO DE LAS FLECHAS */
+.flecha-v {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2); /* Efecto cristal */
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Posicionamiento individual */
+#prev {
+    left: -25px; /* Sobresale un poco del marco para que sea fácil de clicar */
+}
+
+#next {
+    right: -25px;
+}
+
+/* EFECTO AL PASAR EL MOUSE */
+.flecha-v:hover {
+    background: #27ae60; /* Cambia al verde de tu marca */
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 20px rgba(39, 174, 96, 0.4);
+    border-color: transparent;
+}
+
+/* Ajuste para que la imagen no se corte */
+.marco-foto {
+    position: relative;
+    z-index: 1;
+}
+.btn-comprar {
+    /* ... tus otros estilos ... */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#btn-volver-dinamico {
+    display: block;
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #1a5276; /* Color azul de tu marca */
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 15px;
+    border: 2px solid #1a5276;
+    animation: aparecerSuave 0.5s ease forwards;
+    transition: all 0.3s ease;
+}
+
+#btn-volver-dinamico:hover {
+    background: #1a5276;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Animación de entrada */
+@keyframes aparecerSuave {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}/* =========================================
+   ADAPTACIÓN PARA CELULARES (Responsive)
+   ========================================= */
+@media (max-width: 768px) {
+    
+    /* 1. Ajuste del contenedor de detalles */
+    .contenedor-detalle-premium {
+        flex-direction: column; /* Pone la imagen arriba y el texto abajo */
+        padding: 20px;
+        margin: 20px 10px;
+        gap: 20px;
+    }
+
+    /* 2. Ajuste de la imagen */
+    .marco-foto {
+        width: 100%; /* La foto ocupa todo el ancho */
+        height: 350px;
+    }
+
+    /* 3. Flechas de la galería */
+    #prev { left: 10px; } /* Las metemos dentro de la foto para que no se corten */
+    #next { right: 10px; }
+    
+    .flecha-v {
+        width: 45px;
+        height: 45px;
+        background: rgba(0, 0, 0, 0.4); /* Más oscuras para que se vean sobre la foto */
+    }
+
+    /* 4. Textos más legibles */
+    .nombre-detalle {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .precio-grande {
+        font-size: 2.5rem;
+        justify-content: center;
+    }
+
+    /* 5. Botones grandes para el pulgar */
+    .caja-acciones {
+        display: flex;
+        flex-direction: column; /* Botones uno sobre otro */
+        gap: 15px;
+    }
+
+    .btn-comprar, .btn-ws-detalle, #btn-volver-dinamico {
+        width: 100%;
+        margin-left: 0;
+        padding: 18px;
+        font-size: 1.1rem;
+    }
+
+    /* 6. Carrito (Página carrito.html) */
+    .carrito-llamativo {
+        width: 95%;
+        margin: 10px auto;
+    }
+}
+/* --- Diseño Base del Carrito (PC) --- */
+.pantalla-completa-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.carrito-llamativo {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    max-width: 600px;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+/* --- ADAPTACIÓN PARA CELULARES --- */
+@media (max-width: 600px) {
+    .pantalla-completa-flex {
+        padding: 10px; /* Menos margen en los bordes del cel */
+        align-items: flex-start; /* Que el carrito empiece desde arriba */
+    }
+
+    .carrito-llamativo {
+        border-radius: 20px; /* Bordes un poco menos redondeados en móvil */
+    }
+
+    /* Los items del carrito en lista vertical */
+    .item-carrito {
+        flex-direction: row; /* Mantenemos imagen al lado del texto */
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .item-carrito img {
+        width: 60px; /* Imagen un poco más pequeña en móvil */
+        height: 60px;
+    }
+
+    .info-item h4 {
+        font-size: 1rem; /* Texto que no ocupe tanto espacio */
+    }
+
+    /* El área del TOTAL y el BOTÓN WHATSAPP */
+    .resumen-final {
+        padding: 20px;
+    }
+
+    .precio-destacado {
+        font-size: 2.2rem; /* El precio se ajusta para no salirse */
+    }
+
+    .btn-confirmar-magico {
+        padding: 15px;
+        font-size: 1.1rem;
+        /* Efecto de botón que ocupa todo el ancho */
+        display: block;
+        width: 100%;
+    }
+}
